@@ -24,7 +24,7 @@ class showhidden (
     }
   }
 
-  $show_hidden_folders_number = Number($show_hidden_folders)
+  $show_hidden_folders_number = Numeric($show_hidden_folders)
 
   registry_key { 'ShowFileExt':
     ensure => present,
