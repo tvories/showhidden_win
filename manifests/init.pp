@@ -41,7 +41,7 @@ class showhidden (
     ensure  => present,
     path    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowFileExt\StubPath',
     type    => string,
-    data    => "reg add 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' /v HideFileExt /t REG_DWORD /d ${show_file_ext_number} /f",
+    data    => "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v HideFileExt /t REG_DWORD /d ${show_file_ext_number} /f",
     require => Registry_key['ShowFileExt'],
   }
 
@@ -61,7 +61,7 @@ class showhidden (
     ensure  => present,
     path    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowHiddenFolders\StubPath',
     type    => string,
-    data    => "reg add 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' /v Hidden /t REG_DWORD /d ${show_hidden_folders_number} /f",
+    data    => "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v Hidden /t REG_DWORD /d ${show_hidden_folders_number} /f",
     require => Registry_key['ShowHiddenFolders'],
   }
 }
