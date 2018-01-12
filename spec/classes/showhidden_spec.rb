@@ -5,7 +5,34 @@ describe 'showhidden' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      it { is_expected.to compile }
+      context 'passes with minimal params' do
+        let(:params) do
+          { show_file_ext_version: '1,0,0' }
+          { show_hidden_folders_version: '1,0,0' }
+
+          it {
+            is_expected.to contain_registry_value('VersionShowFileExt').with(
+              'ensure'  => 'present',
+              'path'    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowFileExt\Version',
+              'type'    => 'string',
+              'data'    => '1,0,0',
+              'require' => Registry_key['ShowFileExt'],
+            )
+          }
+
+          it {
+            is_expected.to contain_registry_value('VersionShowHiddenFolders').with(
+              'ensure'  => 'present',
+              'path'    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowHiddenFolders\Version',
+              'type'    => 'string',
+              'data'    => '1,0,0',
+              'require' => Registry_key['ShowHiddenFolders'],
+            )
+          }
+
+          it { is_expected.to compile }
+        end
+      end
     end
   end
 end
