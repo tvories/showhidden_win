@@ -6,7 +6,7 @@
 #
 # @example
 #   include showhidden
-class showhidden (
+class showhidden_win (
   Boolean $show_file_ext = true,
   Boolean $show_hidden_folders = true,
   String $show_file_ext_version = undef,
