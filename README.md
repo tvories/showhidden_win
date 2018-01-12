@@ -1,81 +1,71 @@
+# showhidden_win
+Manage how hidden folders and file type extensions are displayed in Windows machines.  This module leverages [Microsoft Active Setup](http://www.itninja.com/blog/view/an-active-setup-primer) to set the hidden folder or hidden file extension preferences.
 
-# showhidden
+Briefly, Active Setup is a registry key that runs "something" at logon one time for every user that logs into the machine.  It's difficult for puppet to update HKCU registry keys, so to get past that you can have Active Setup run a command which updates the HKCU key for every user that logs in.
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
+This module runs `reg add` to update the HKCU registry entry for hiding or showing files and folders or file extensions.  By default, this module sets Windows to **show** hidden files and folders and to **show** file extensions.  You can adjust this to your preference.
 
-The README template below provides a starting point with details about what information to include in your README.
+Another thing to note about using Active Setup to manage HKCU is that it will only run once per version number.  Version numbers are a string value of '1,0,0' or similar.  If you decide to change your preferences and want to only show file extensions but not hidden files and folders, you will need to increment the version number.
 
+For example, say you initially set your preferences to:
 
+```ruby
+class { 'showhidden_win':
+    show_file_ext_version       => '1,0,0',
+    show_hidden_folders_version => '1,0,0',
+    show_file_ext               => true,
+    show_hidden_folders         => true,
+  }
+```
 
+and now you want to change those preferences to **not** show hidden folders.  You would then set your preferences to:
 
+```ruby
+class { 'showhidden_win':
+  show_file_ext_version       => '1,0,0',
+  show_hidden_folders_version => '1,0,1',  # <--- MUST INCREMENT THIS NUMBER
+  show_file_ext               => true,
+  show_hidden_folders         => false,
+}
+```
 
+By incrementing the version number, Active Setup will run again on a users next login to update the preferences you have set.  If you do not update the version number, the settings will not re-run.
 
+## Parameters
 
-#### Table of Contents
-
-1. [Description](#description)
-2. [Setup - The basics of getting started with showhidden](#setup)
-    * [What showhidden affects](#what-showhidden-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with showhidden](#beginning-with-showhidden)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
-
-## Description
-
-Start with a one- or two-sentence summary of what the module does and/or what problem it solves. This is your 30-second elevator pitch for your module. Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph should answer the questions: "What does this module *do*?" and "Why would I use it?" If your module has a range of functionality (installation, configuration, management, etc.), this is the time to mention it.
-
-## Setup
-
-### What showhidden affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with showhidden
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+ * ```show_file_ext``` - [Optional] Boolean.  Defaults to true.  ```true``` if you want to **show** file extensions.  ```false``` if you want to **hide**.
+ * ```show_hidden_folders``` - [Optional] Boolean.  Defaults to true.  ```true``` if you want to **show** hidden files and folders.  ```false``` if you want to **hide**.
+ * ```show_file_ext_version``` - [Required] String value version number.  Must be comma values, not periods.  IE: ```1,0,0```, NOT ```1.0.0``` <-- invalid.
+ * ```show_hidden_folders_version``` - [Required] String value version number.  Must be comma values, not periods.  IE: ```1,0,0```, NOT ```1.0.0``` <-- invalid.
 
 ## Usage
+At minimum you must specify the version numbers for ```show_file_ext_version``` and ```show_hidden_folders_version```.  The module defaults to **show** both hidden files/folders and file extensions.
 
-This section is where you describe how to customize, configure, and do the fancy stuff with your module here. It's especially helpful if you include usage examples and code samples for doing things with your module.
+## Example
+```ruby
+class { 'showhidden_win':
+  show_file_ext_version       => '1,0,0',
+  show_hidden_folders_version => '1,0,0',
+  show_file_ext               => true, # Show file extensions
+  show_hidden_folders         => true, # Show hidden files/folders
+}
+```
 
-## Reference
+or
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in the README Reference section.
+```ruby
+class { 'showhidden_win':
+  show_file_ext_version       => '1,0,0',
+  show_hidden_folders_version => '1,0,0',
+  show_file_ext               => true, # Show file extensions
+  show_hidden_folders         => false, # DON'T show hidden files/folders
+}
+```
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+or minimal usage
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-## Limitations
-
-This is where you list OS compatibility, version compatibility, etc. If there are Known Issues, you might want to include them under their own heading here.
-
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+```ruby
+class { 'showhidden_win':
+  show_file_ext_version       => '1,0,0',
+  show_hidden_folders_version => '1,0,0',
+}
