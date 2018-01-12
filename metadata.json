@@ -6,7 +6,7 @@
   "license": "MIT",
   "source": "https://github.com/tvories/showhidden_win",
   "dependencies": [
-    { "name": "puppetlabs/registry", "version_requirement": ">= 1.1.4"}
+    { "name": "puppetlabs/registry", "version_requirement":">= 1.1.4"}
   ],
   "operatingsystem_support": [
     {

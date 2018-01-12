@@ -11,7 +11,6 @@ describe 'showhidden_win' do
           'path'    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowFileExt\Version',
           'type'    => 'string',
           'data'    => '1,0,0',
-          'require' => Registry_key['ShowFileExt'],
         )
       }
 
@@ -21,7 +20,6 @@ describe 'showhidden_win' do
           'path'    => 'HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\ShowHiddenFolders\Version',
           'type'    => 'string',
           'data'    => '1,0,0',
-          'require' => Registry_key['ShowHiddenFolders'],
         )
       }
 
