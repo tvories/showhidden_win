@@ -1,11 +1,19 @@
-# showhidden
+# showhidden_win
 #
-# A description of what this class does
+# Manage how hidden folders and file type extensions are displayed in Windows machines. This module leverages Microsoft Active Setup to set the hidden folder or hidden file extension preferences.
+# Briefly, Active Setup is a registry key that runs "something" at logon one time for every user that logs into the machine. It's difficult for puppet to update HKCU registry keys, so to get past that you can have Active Setup run a command which updates the HKCU key for every user that logs in.
+# This module runs reg add to update the HKCU registry entry for hiding or showing files and folders or file extensions. By default, this module sets Windows to show hidden files and folders and to show file extensions. You can adjust this to your preference.
+# Another thing to note about using Active Setup to manage HKCU is that it will only run once per version number. Version numbers are a string value of '1,0,0' or similar. If you decide to change your preferences and want to only show file extensions but not hidden files and folders, you will need to increment the version number.
 #
-# @summary A short summary of the purpose of this class
+# @summary Manage how hidden folders and file type extensions are displayed in Windows machines.
 #
-# @example
-#   include showhidden
+# @example class { 'showhidden_win':
+  #   show_file_ext_version       => '1,0,0',
+  #   show_hidden_folders_version => '1,0,0',
+  #   show_file_ext               => true,
+  #   show_hidden_folders         => true,
+  # }
+#   include showhidden_win
 class showhidden_win (
   Boolean $show_file_ext = true,
   Boolean $show_hidden_folders = true,

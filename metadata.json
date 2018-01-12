@@ -1,6 +1,6 @@
 {
   "name": "tvories-showhidden_win",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Taylor Vories",
   "summary": "This module shows or hides file extensions or hidden folders in Windows.",
   "license": "MIT",
