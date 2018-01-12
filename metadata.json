@@ -1,10 +1,10 @@
 {
-  "name": "tvories-showhidden",
+  "name": "tvories-showhidden_win",
   "version": "0.1.0",
   "author": "Taylor Vories",
   "summary": "This module shows or hides file extensions or hidden folders in Windows.",
-  "license": "Apache-2.0",
-  "source": "",
+  "license": "MIT",
+  "source": "https://github.com/tvories/showhidden_win",
   "dependencies": [
 
   ],
@@ -14,7 +14,8 @@
       "operatingsystemrelease": [
         "2008 R2",
         "2012 R2",
-        "10"
+        "10",
+        "7"
       ]
     }
   ],
