@@ -1,12 +1,15 @@
 {
   "name": "tvories-showhidden_win",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Taylor Vories",
   "summary": "This module shows or hides file extensions or hidden folders in Windows.",
   "license": "MIT",
   "source": "https://github.com/tvories/showhidden_win",
   "dependencies": [
-    { "name": "puppetlabs/registry", "version_requirement":">= 1.1.4"}
+    {
+      "name": "puppetlabs/registry",
+      "version_requirement": ">= 1.1.4"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -15,17 +18,20 @@
         "2008 R2",
         "2012 R2",
         "10",
-        "7"
+        "7",
+        "2016",
+        "2019",
+        "2022"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
+      "version_requirement": ">= 4.7.0"
     }
   ],
-  "pdk-version": "1.3.1",
-  "template-url": "file://C:/PROGRA~1/PUPPET~1/DevelopmentKit/share/cache/pdk-templates.git",
-  "template-ref": "1.3.0-0-g632fa63"
+  "pdk-version": "3.0.1",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#3.0.1",
+  "template-ref": "tags/3.0.1-0-gd13288a"
 }
